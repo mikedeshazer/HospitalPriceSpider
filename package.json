@@ -1,0 +1,12 @@
+{
+  "name": "HospitalPriceSpider",
+  "version": "1.0.0",
+  "description": "Data price comparison between hospitals",
+  "main": "index.js",
+  "author": "Nicholas Njogu",
+  "license": "MIT",
+  "dependencies": {
+    "csvtojson": "^2.0.10",
+    "express": "^4.17.1"
+  }
+}
