@@ -1,32 +1,95 @@
+/**
+ * Servers as the express server
+ */
 const path = require('path')
-//const Joi = require('@hapi/joi')
+const fs = require('fs')
+const Joi = require('@hapi/joi')
 const express = require('express')
-//const uuid = require('uuid/v4')
+const uuid = require('uuid/v4')
+const cors = require('cors')
 const app = express()
 
+// allow cors for use with react app http://localhost:3000/ when using other render like react or vue on dev
+app.use(cors())
 
 const csvToJsonService = require('./services/csvToJson');
 
+function availableCsvFiles() {
+    const csvFolder = path.join(__dirname, 'rawCSVs')
+
+    try {
+        fs.readdir(csvFolder,  (err, files) => {
+            if (err) console.log('Error', err)
+            else console.log('Result', files)
+            return files
+        })
+    } catch (e) {
+        return e
+    }
+}
+
+async function getFileData(filePath) {
+    console.log('Filename === ',filePath)
+
+    const data = await csvToJsonService.getJsonFromCsv(filePath)
+
+    return data
+}
 
 /**
  *@TODO tests the api returns json data with fields unmatched
  */
 async function testingConvert() {
-    const csvFilePath = path.join(__dirname, 'rawCSVs','McLean_Hospital.csv')
-     const data = await csvToJsonService.getJsonFromCsv(csvFilePath)
+    const csvFilePath = path.join(__dirname, 'rawCSVs','hospital_CPMC.csv')
+    const data = await csvToJsonService.getJsonFromCsv(csvFilePath)
 
-    console.log('Data....Dataaa', data)
     return data
 }
 
-
 app.use(express.json())
+
+/**
+ * Get all available CSVs data files and return
+ */
+app.get('/api/csv-files', async (req, res) => {
+    const csvFolder = path.join(__dirname, 'rawCSVs')
+
+    try {
+        fs.readdir(csvFolder,  (err, files) => {
+            if (err) console.log('Error', err)
+            else console.log('Result', files)
+            //return files
+            filesList = files.filter(function(e){
+                return path.extname(e).toLowerCase() === '.csv'
+            });
+            //console.log(filesList);
+            res.send(filesList)
+        })
+    } catch (e) {
+        res.send(e)
+    }
+
+})
+
+app.get('/api/csvdata/:id', async (req, res) => {
+    const fileName = req.params.id
+    const csvFilePath = path.join(__dirname, 'rawCSVs', fileName)
+    console.log('fileName', fileName)
+    const data =  await getFileData(csvFilePath)
+    //console.log('data sendind...', data)
+    res.send(data)
+})
 
 app.get('/api/test', async (req, res) => {
     const data =  await testingConvert()
     //console.log('data sendind...', data)
     res.send(data)
 })
+
+app.get('/', (req, res) => {
+    res.send('Hello And welcome go to http://localhost:3007/api/csv-files , to view available csv files');
+})
+
 
 /*
 const prices = [
@@ -36,10 +99,6 @@ const prices = [
     { id: 4, name: 'ultrasound'},
     { id: 5, name: 'vaccine'},
 ]
-
-app.get('/', (req, res) => {
-    res.send('Hello World');
-})
 
 app.get('/api/prices', (req, res) => {
     res.send(prices)
@@ -83,7 +142,7 @@ app.put('/api/prices/:id', (req, res) => {
 
 })
 
-app.delete('/api/courses/:id', (req, res) => {
+app.delete('/api/prices/:id', (req, res) => {
 
 })
 

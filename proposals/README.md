@@ -30,4 +30,16 @@ run `yarn install` or `npm install` to download and install express and
  The fields data are unmatched and other files data can be retrived via
  the same way by editing index.js on line 19
  
+ ##Stage 2
+ Clone this repo, cd into that directory, run `yarn install` or `npm install`,
+ and after that run node index.js to start server on `http://localhost:3007/`.
+ Go to `http://localhost:3007/api/csv-files` to access all csv files in
+ our folder.
+ Go to `http://localhost:3007/api/csvdata/availableFileName.csv` eg
+ `http://localhost:3007/api/csvdata/hospital_Baton-Rouge-General-Medical-Center.csv`
+ to view the content to each file in json.
+ You many copy each of the names displayed on the list on `http://localhost:3007
+ /api/csv-files` and add to `http://localhost:3007/api/csvdata/TheCopiedFileNamePlus.Extension`
+ to test.
  
+ ##Stage 3

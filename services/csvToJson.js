@@ -1,3 +1,4 @@
+const fs = require('fs')
 const csvToJsonV2=require("csvtojson/v2");
 /*
 const prices = [
@@ -14,6 +15,28 @@ function getPrice(id) {
     return prices.find(p => p._id === id);
 }
 */
+function getCsvFiles(csvFolder) {
+
+    try {
+        fs.readdir(csvFolder,  (err, files) => {
+            if (files) {
+                return files
+            }
+            if (err) {
+                return err
+            }
+
+            //filesList = files.filter(function(e){
+            //return path.extname(e).toLowerCase() === '.csv'
+            //});
+            //console.log(filesList);
+            //return filesList
+        })
+    } catch (e) {
+        return e
+    }
+
+}
 
 /**
  * Return Json raw data give filePath
@@ -41,4 +64,5 @@ async function getJsonFromCsv(filePath){
 
 module.exports =  {
     getJsonFromCsv,
+    getCsvFiles,
 };

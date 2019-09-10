@@ -3,10 +3,16 @@
   "version": "1.0.0",
   "description": "Data price comparison between hospitals",
   "main": "index.js",
-  "author": "Nicholas Njogu",
+  "author": "Nick Tests",
   "license": "MIT",
   "dependencies": {
+    "@hapi/joi": "^15.1.1",
+    "axios": "^0.19.0",
     "csvtojson": "^2.0.10",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "uuid": "^3.3.3"
+  },
+  "devDependencies": {
+    "cors": "^2.8.5"
   }
 }
