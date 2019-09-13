@@ -12,24 +12,16 @@ const app = express()
 // allow cors for use with react app http://localhost:3000/ when using other render like react or vue on dev
 app.use(cors())
 
+// import local services
 const csvToJsonService = require('./services/csvToJson');
+const xlsxToJson = require('./services/spreedsheetToJson')
 
-function availableCsvFiles() {
-    const csvFolder = path.join(__dirname, 'rawCSVs')
-
-    try {
-        fs.readdir(csvFolder,  (err, files) => {
-            if (err) console.log('Error', err)
-            else console.log('Result', files)
-            return files
-        })
-    } catch (e) {
-        return e
-    }
-}
-
+const xlsxFolder = path.join(__dirname, 'rawXlsxs')
+/**
+ * helper function for converting
+ * csv to json give path
+ */
 async function getFileData(filePath) {
-    console.log('Filename === ',filePath)
 
     const data = await csvToJsonService.getJsonFromCsv(filePath)
 
@@ -47,6 +39,11 @@ async function testingConvert() {
 }
 
 app.use(express.json())
+
+app.get('/', (req, res) => {
+    res.send('Hello And welcome go to http://localhost:3007/api/csv-files , to view available csv files');
+})
+
 
 /**
  * Get all available CSVs data files and return
@@ -86,10 +83,50 @@ app.get('/api/test', async (req, res) => {
     res.send(data)
 })
 
-app.get('/', (req, res) => {
-    res.send('Hello And welcome go to http://localhost:3007/api/csv-files , to view available csv files');
-})
+/**
+ * This endpoint returns a list of available
+ * spreadsheets in the given local folder
+ */
+app.get('/api/data/local-spreed-sheets', async (req, res) => {
 
+    // path to the local folder
+    const xlsxFolder = path.join(__dirname, 'rawXlsxs')
+    try {
+        fs.readdir(xlsxFolder,  (err, files) => {
+            if (err) {
+
+                res.send(e)
+            }
+
+            else
+
+                filesList = files.filter( (e) => {
+                    return path.extname(e).toLowerCase() === '.xlsx'
+                });
+
+            res.send(filesList)
+        })
+    } catch (e) {
+        res.send(e)
+    }
+
+})
+/**
+ * given a file name in the request object,
+ * should convert xlsx to json
+ * TODO::
+ * for development got do http://localhost:3007/api/data/local-xlsl-file/{filename.xlsx}
+ */
+app.get('/api/data/local-xlsl-file/:id', async (req, res) => {
+    const fileName = req.params.id
+    const folderPath = `services/${fileName}`
+    const filePath = path.join(__dirname,folderPath)
+    console.log('the path REQUESing ',filePath)
+    const data = await xlsxToJson.convertXlsxToJson(filePath)
+
+    res.send(data)
+
+})
 
 /*
 const prices = [

@@ -25,12 +25,6 @@ function getCsvFiles(csvFolder) {
             if (err) {
                 return err
             }
-
-            //filesList = files.filter(function(e){
-            //return path.extname(e).toLowerCase() === '.csv'
-            //});
-            //console.log(filesList);
-            //return filesList
         })
     } catch (e) {
         return e
