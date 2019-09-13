@@ -87,7 +87,7 @@ app.get('/api/test', async (req, res) => {
  * This endpoint returns a list of available
  * spreadsheets in the given local folder
  */
-app.get('/api/data/local-spreed-sheets', async (req, res) => {
+app.get('/api/data/local-spread-sheets', async (req, res) => {
 
     // path to the local folder
     const xlsxFolder = path.join(__dirname, 'rawXlsxs')

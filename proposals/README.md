@@ -51,13 +51,13 @@ run `yarn install` or `npm install` to download and install express and
  Then run `node index.js` to start the local server at port `http://localhost:3007`.
  The endpoint are(with the post current)
  
- 1. `http://localhost:3007/api/data/local-spreed-sheets`
+ 1. `http://localhost:3007/api/data/local-spread-sheets`
  Lists all spreadsheets available in the local folder
  
  2.`http://localhost:3007/api/data/local-xlsl-file/{filename.xlsx}`
  Displays the content of the spreadsheet in json format, remember a valid
  name that is available in the local folder, for ideas see 
- `http://localhost:3007/api/data/local-spreed-sheets`
+ `http://localhost:3007/api/data/local-spread-sheets`
  
  3. To avoid repetition, please refer to stage2 and 1 to know the other api
  endpoint and what the return.
