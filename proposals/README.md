@@ -43,3 +43,22 @@ run `yarn install` or `npm install` to download and install express and
  to test.
  
  ##Stage 3
+ 
+ ##Stage 4 
+ So far, I have added scripts to convert csv to json, and spreadsheet to json.
+ To test, clone this repo and cd to the dir, run `yarn install` or `npm install` to install
+ the required libraries.
+ Then run `node index.js` to start the local server at port `http://localhost:3007`.
+ The endpoint are(with the post current)
+ 
+ 1. `http://localhost:3007/api/data/local-spreed-sheets`
+ Lists all spreadsheets available in the local folder
+ 
+ 2.`http://localhost:3007/api/data/local-xlsl-file/{filename.xlsx}`
+ Displays the content of the spreadsheet in json format, remember a valid
+ name that is available in the local folder, for ideas see 
+ `http://localhost:3007/api/data/local-spreed-sheets`
+ 
+ 3. To avoid repetition, please refer to stage2 and 1 to know the other api
+ endpoint and what the return.
+ 
