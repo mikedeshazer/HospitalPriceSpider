@@ -1,7 +1,3 @@
-const fs = require('fs')
-const path = require('path')
-const gsjson = require('google-spreadsheet-to-json')
-const { extractSheets } = require("spreadsheet-to-json");
 const parser = require('simple-excel-to-json')
 
 

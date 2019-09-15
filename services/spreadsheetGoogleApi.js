@@ -1,15 +1,5 @@
-const GoogleSpreadsheet = require('google-spreadsheet');
-//var async = require('async');
+const GoogleSpreadsheet = require('google-spreadsheet')
 const { promisify } = require('util')
-
-
-async function printStudent(student) {
-    console.log(`Name: ${student.studentname}`)
-    console.log(`Major: ${student.major}`)
-    console.log(`Home State: ${student.homestate}`)
-    console.log(`---------------------------------`)
-}
-
 /**
  * Should return the data in the rows
  * if the spreadsheet id is legit
@@ -30,7 +20,7 @@ async function getSpreadSheetData(spreadSheetId) {
         offset: 1
         //offset: 5,
         //limit: 10,
-        //orderby: 'homestate'// order by homestate alphabetcal order
+        //orderby: 'name'// order by hospital name alphabetcal order
     })
     //console.log('Rows.....', JSON.stringify(rows) ) // data
     //console.log(`Title: ${sheet.title}, Rows: ${sheet.rowCount}`)

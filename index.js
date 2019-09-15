@@ -14,16 +14,10 @@ app.use(cors())
 
 // import local services
 const csvToJsonService = require('./services/csvToJson');
-const xlsxToJson = require('./services/spreedsheetToJson')
+const xlsxToJson = require('./services/spreadsheetToJson')
 const googleSheets = require('./services/spreadsheetGoogleApi')
 
-const xlsxFolder = path.join(__dirname, 'rawXlsxs')
-
-let spreadSheetId = '1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms'
-
-googleSheets.getSpreadSheetData(spreadSheetId)
-
-
+//---------------------------------------------------------------------------------------------------------
 /**
  * helper function for converting
  * csv to json give path
@@ -44,29 +38,33 @@ async function testingConvert() {
 
     return data
 }
-
+//----------------------------------------------------------------------------------------------------------
 app.use(express.json())
 
+//------------------api endpoints below
+/**
+ * Serves as the homepage
+ */
 app.get('/', (req, res) => {
     res.send('Hello And welcome go to http://localhost:3007/api/csv-files , to view available csv files');
 })
 
 
 /**
- * Get all available CSVs data files and return
+ * Get all available CSVs data files in our local
+ * folder and return
  */
 app.get('/api/csv-files', async (req, res) => {
     const csvFolder = path.join(__dirname, 'rawCSVs')
 
     try {
         fs.readdir(csvFolder,  (err, files) => {
-            if (err) console.log('Error', err)
-            else console.log('Result', files)
-            //return files
+            if (err) res.send(err)
+            else
             filesList = files.filter(function(e){
                 return path.extname(e).toLowerCase() === '.csv'
             });
-            //console.log(filesList);
+
             res.send(filesList)
         })
     } catch (e) {
@@ -75,18 +73,16 @@ app.get('/api/csv-files', async (req, res) => {
 
 })
 
+
+
+/**
+ * This endpoint given a filename+ext name
+ * returns it's content on json
+ */
 app.get('/api/csvdata/:id', async (req, res) => {
     const fileName = req.params.id
     const csvFilePath = path.join(__dirname, 'rawCSVs', fileName)
-    console.log('fileName', fileName)
     const data =  await getFileData(csvFilePath)
-    //console.log('data sendind...', data)
-    res.send(data)
-})
-
-app.get('/api/test', async (req, res) => {
-    const data =  await testingConvert()
-    //console.log('data sendind...', data)
     res.send(data)
 })
 
@@ -118,6 +114,7 @@ app.get('/api/data/local-spread-sheets', async (req, res) => {
     }
 
 })
+
 /**
  * given a file name in the request object,
  * should convert xlsx to json
@@ -141,7 +138,6 @@ app.get('/api/data/local-xlsl-file/:id', async (req, res) => {
  * @TODO test example, should be implemented in real world
  */
 app.get('/api/data/google-spread-sheets', async (req, res) => {
-    let gsjson = require('google-spreadsheet-to-json')
     const spreadSheets = [
         {id: 'sdfdstfdg23245hJJGCV', name: 'Name 1'},
         {id: 'sdfdstfdg23245hJJGCV', name: 'Name 2'},
@@ -165,6 +161,12 @@ app.get('/api/data/google-spread-sheets/:id', async (req, res) => {
 
     res.send(data)
 })
+
+app.get('/api/test', async (req, res) => {
+    const data =  await testingConvert()
+    res.send(data)
+})
+
 
 /*
 const prices = [
