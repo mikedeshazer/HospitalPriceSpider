@@ -136,7 +136,7 @@ app.get('/api/data/local-xlsl-file/:id', async (req, res) => {
 })
 
 /**
- * We could list all available spreedsheets in this endpoint
+ * We could list all available spreadsheets in this endpoint
  * save the sheets id in a database or
  * @TODO test example, should be implemented in real world
  */
@@ -153,6 +153,12 @@ app.get('/api/data/google-spread-sheets', async (req, res) => {
     res.send(spreadSheets)
 })
 
+/**
+ * This endpoint returns json data given a google spreadsheet id
+ * Fetches it form your drive account, you must supply the id
+ * in the request url
+ * @TODO refine the output check googleSheets.getSpreadSheetData(spreadsheet to fetch)
+ */
 app.get('/api/data/google-spread-sheets/:id', async (req, res) => {
     const spreadSheetId = req.params.id
     const data = await googleSheets.getSpreadSheetData(spreadSheetId)

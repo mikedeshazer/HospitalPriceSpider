@@ -62,3 +62,26 @@ run `yarn install` or `npm install` to download and install express and
  3. To avoid repetition, please refer to stage2 and 1 to know the other api
  endpoint and what the return.
  
+ ## Added two api endpoints
+ To be able to use the 2nd one though, you will have to configure google drive services
+ and obtain the required credentials.See steps below
+ 
+ 4. 
+ (i). `http://localhost:3007/api/data/google-spread-sheets`, lists all available sheets by id
+ might load from a database or config, currently returns fake dummy data
+ 
+ ####Configure google api
+ . Head to `https://console.developers.google.com`
+ . Create an app and enable google drive api and make sure to get the credentials
+ . On Add credentials to your project, the CONTINUE button downloads a file to your computer
+ . copy file to our project root dir and rename it to `client_secret.json`
+ . In our client_secret.json file there's `client_email` key, copy its value and share
+ your spreadsheets in your google drive with this email. Each spreadsheet you share can 
+ be retrived by another application given the right permissions(authenticate/authorize)
+ . To test, see below
+ 
+ (ii). `http://localhost:3007/api/data/google-spread-sheets/{speadsheet id }`
+  eg `http://localhost:3007/api/data/google-spread-sheets/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms`
+  returns data from googlesheets services given spreadsheet and id and credentials well configured
+  
+ 
