@@ -15,8 +15,15 @@ app.use(cors())
 // import local services
 const csvToJsonService = require('./services/csvToJson');
 const xlsxToJson = require('./services/spreedsheetToJson')
+const googleSheets = require('./services/spreadsheetGoogleApi')
 
 const xlsxFolder = path.join(__dirname, 'rawXlsxs')
+
+let spreadSheetId = '1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms'
+
+googleSheets.getSpreadSheetData(spreadSheetId)
+
+
 /**
  * helper function for converting
  * csv to json give path
@@ -126,6 +133,31 @@ app.get('/api/data/local-xlsl-file/:id', async (req, res) => {
 
     res.send(data)
 
+})
+
+/**
+ * We could list all available spreedsheets in this endpoint
+ * save the sheets id in a database or
+ * @TODO test example, should be implemented in real world
+ */
+app.get('/api/data/google-spread-sheets', async (req, res) => {
+    let gsjson = require('google-spreadsheet-to-json')
+    const spreadSheets = [
+        {id: 'sdfdstfdg23245hJJGCV', name: 'Name 1'},
+        {id: 'sdfdstfdg23245hJJGCV', name: 'Name 2'},
+        {id: 'sdfdstfdg23245hJJGCV', name: 'Name 3'},
+        {id: 'sdfdstfdg23245hJJGCV', name: 'Name 4'},
+        {id: 'sdfdstfdg23245hJJGCV', name: 'Name 5'},
+    ]
+
+    res.send(spreadSheets)
+})
+
+app.get('/api/data/google-spread-sheets/:id', async (req, res) => {
+    const spreadSheetId = req.params.id
+    const data = await googleSheets.getSpreadSheetData(spreadSheetId)
+
+    res.send(data)
 })
 
 /*
