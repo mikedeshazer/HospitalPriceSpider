@@ -82,6 +82,8 @@ run `yarn install` or `npm install` to download and install express and
  
  (ii). `http://localhost:3007/api/data/google-spread-sheets/{speadsheet id }`
   eg `http://localhost:3007/api/data/google-spread-sheets/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms`
-  returns data from googlesheets services given spreadsheet and id and credentials well configured
+  
+  returns data from google drive api services if spreadsheet and id and credentials 
+  well configured (check app dir client_secret.json, client_email: 'Value to share')
   
  
