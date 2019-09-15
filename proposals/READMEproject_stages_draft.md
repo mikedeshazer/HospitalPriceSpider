@@ -3,7 +3,7 @@
 ##Stage 1: Convert csv to json
 ##Stage 2
 ##Stage 3
-##Stage 4
+##Stage 4: Load via endpoint list of local spreadsheets in a folder, as well as google spreadsheet to json
 
 #Stage 1
 I needed to atleast present some data to a browser, so I opted for
